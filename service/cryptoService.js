@@ -26,9 +26,17 @@ exports.fetchAndSaveCryptoData = async () => {
       await record.save();
     }
 
-    console.log("Cryptocurrency data fetched and saved successfully!");
+    res.json({
+        success: true,
+        message : "Cryptocurrency data fetched and saved successfully!",
+    })
+    
   } catch (error) {
     console.error("Error fetching or saving crypto data:", error.message);
-    throw error;
+    res.status(400).json({
+        success : false,
+        message : "Something went wrong",
+    });
+
   }
 };

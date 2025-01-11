@@ -1,8 +1,14 @@
 // Importing required modules
 const express = require("express");
+const app = express();
+
 // Importing database connection module
 const dbConnect = require("./config/databaseConnection");
-const app = express();
+
+// Importing route modules
+const fetchAndSaveCryptoData = require('./routes/fetchandsaveCrypto.Router');
+const getDeviation = require('./routes/getDeviation.Router');
+const getStats = require('./routes/getlatestStats.Router');
 
 require("dotenv").config(); // Load environment variables
 
@@ -10,17 +16,12 @@ require("dotenv").config(); // Load environment variables
 // Define port number
 const PORT = process.env.PORT || 3000;
 
-// Importing route modules
-const fetchAndSaveCryptoData = require('./routes/fetchandsaveCrypto.Router');
-const getDeviation = require('./routes/getDeviation.Router');
-const getStats = require('./routes/getlatestStats.Router');
 
 // Middleware for parsing JSON
 app.use(express.json());
 
 // Connect to the database
 dbConnect();
-
 
 
 
@@ -45,3 +46,13 @@ app.listen(PORT, () => {
 
 
 
+//URL references for testing
+
+// POST request to fetch cryptocurrency and creating a new entry saving it into the database after every 2 hours
+// http://localhost:4000/api/v1/koinx/fetchdata
+
+// GET request  for  fetching the latest data about the requested cryptocurrency.
+// http://localhost:4000/api/v1/koinx/stats
+
+// GET request for  for fetching standard deviation of the price of the requested cryptocurrency for the last 100 records.
+// http://localhost:4000/api/v1/koinx/deviation
